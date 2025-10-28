@@ -11931,20 +11931,17 @@ var StdioServerTransport = class {
   }
 };
 
-// src/index.js
-var import_fs2 = __toESM(require("fs"), 1);
-
 // src/storage/sqlite.js
 var import_better_sqlite3 = __toESM(require("better-sqlite3"), 1);
 var import_fs = __toESM(require("fs"), 1);
 var import_path = __toESM(require("path"), 1);
 var SQLiteStorage = class {
-  constructor(dbPath) {
-    const dir = import_path.default.dirname(dbPath);
+  constructor(dbPath2) {
+    const dir = import_path.default.dirname(dbPath2);
     if (!import_fs.default.existsSync(dir)) {
       import_fs.default.mkdirSync(dir, { recursive: true });
     }
-    this.db = new import_better_sqlite3.default(dbPath);
+    this.db = new import_better_sqlite3.default(dbPath2);
     this.db.pragma("journal_mode = WAL");
     this.initSchema();
   }
@@ -12338,7 +12335,11 @@ ${formatted}`
 }
 
 // src/index.js
-var config = JSON.parse(import_fs2.default.readFileSync("./config.json", "utf-8"));
+var dbPath = process.argv[2];
+if (!dbPath) {
+  logger.error("DATABASE_PATH_ERROR: The path to the database file must be provided as a command-line argument.");
+  process.exit(1);
+}
 var server = new Server(
   {
     name: "projecta",
@@ -12352,7 +12353,7 @@ var server = new Server(
     }
   }
 );
-var sqliteStorage = new SQLiteStorage(config.sqlitePath);
+var sqliteStorage = new SQLiteStorage(dbPath);
 var samplingHelper = new SamplingHelper(server);
 registerProjectContextResource(server, sqliteStorage);
 var tools = [

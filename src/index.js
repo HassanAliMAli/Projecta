@@ -15,8 +15,12 @@ import { listProjectsTool } from './tools/list-projects.js';
 import { registerProjectContextResource } from './resources/project-context.js';
 
 // --- CONFIGURATION ---
-// Load config from file
-const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+// Read the database path from the command-line arguments.
+const dbPath = process.argv[2];
+if (!dbPath) {
+  logger.error('DATABASE_PATH_ERROR: The path to the database file must be provided as a command-line argument.');
+  process.exit(1); // Exit if no path is provided.
+}
 
 // --- INITIALIZATION ---
 // Create the MCP server instance, enabling tools, resources, and sampling
@@ -35,7 +39,7 @@ const server = new Server(
 );
 
 // Initialize the database and AI sampling helper
-const sqliteStorage = new SQLiteStorage(config.sqlitePath);
+const sqliteStorage = new SQLiteStorage(dbPath);
 const samplingHelper = new SamplingHelper(server);
 
 // --- RESOURCE REGISTRATION ---

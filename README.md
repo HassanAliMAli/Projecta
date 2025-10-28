@@ -68,7 +68,7 @@ Projecta is published on NPM and is designed for a zero-setup experience.
 
 2.  **Add the MCP Server Configuration**
 
-    Add the following JSON snippet. This tells your IDE to automatically download and run Projecta whenever it's needed.
+    Add the following JSON snippet. This tells your IDE how to run Projecta, passing the **absolute path** to your desired database file as an argument.
 
 
 
@@ -84,7 +84,9 @@ Projecta is published on NPM and is designed for a zero-setup experience.
 
           "-y",
 
-          "@realhassan/projecta"
+          "@realhassan/projecta",
+
+          "C:/Users/YourUser/Documents/memories.db" // <-- Set the path to your database file here
 
         ]
 
@@ -102,7 +104,7 @@ Projecta is published on NPM and is designed for a zero-setup experience.
 
 
 
-**That's it!** Projecta is now installed and will run automatically in any project you open.
+**That's it!** Projecta is now configured. It will run automatically and store all its data in the file path you provided.
 
 ## Usage Examples
 
