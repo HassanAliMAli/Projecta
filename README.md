@@ -1,44 +1,158 @@
-# Projecta
+# Projecta: Your Local AI Memory Server
 
-A focused, essential memory MCP server using local storage and client-side AI via MCP Sampling.
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Node.js](https://img.shields.io/badge/node-%3E%3D18.0-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-stable-green)
 
-## Features
+**Projecta** is a local, private, and intelligent memory server for your AI assistant. It acts as a persistent "second brain," allowing your AI to remember project context, decisions, and key information across multiple sessions, all without relying on any external APIs or services.
 
-*   `store_memory`: Remembers a piece of information. Automatically detects the project and uses the client's AI to generate tags and keywords.
-*   `search_memory`: Searches stored memories. Uses the client's AI to expand your query for better results.
-*   `list_projects`: Lists all projects that have stored memories.
-*   **Automatic Context Resource (`memory://current-project`):** Automatically loads the last 5-10 memories into the AI's context when you open a project.
+---
 
-## Setup
+## The Core Problem
 
-1.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+As a developer, your biggest challenge isn't writing code—it's managing context. When you return to a project, you constantly ask:
 
-2.  **Configure the database path:**
-    Open `config.json` and replace `"REPLACE_WITH_YOUR_HOME_DIRECTORY/.memory-mcp/memories.db"` with an absolute path to where you want to store the `memories.db` file.
+*   "What was I working on last week?"
+*   "Why did we choose this library over that one?"
+*   "I've solved this exact bug before... how did I do it?"
 
-3.  **Run the server:**
-    ```bash
-    node src/index.js
-    ```
+Projecta is designed to answer these questions instantly by giving your AI assistant a reliable, long-term memory.
 
-4.  **Connect your AI Assistant:**
-    Configure your client (Cursor, Windsurf, etc.) to connect to the server. For example, in Cursor, you might add a `.cursor/mcp.json` file to your project:
-    ```json
-    {
-      "mcpServers": {
-        "memory": {
-          "command": "node",
-          "args": ["/absolute/path/to/memory-mcp-mvp/src/index.js"]
-        }
-      }
+## How It Works: The Magic of MCP Sampling
+
+Projecta's key innovation is its **zero-dependency architecture**. Instead of using external APIs for its intelligence, it uses a feature of the Model Context Protocol (MCP) called **Sampling**.
+
+When a "smart" action is needed (like generating tags or understanding a search query), Projecta simply asks your AI assistant (e.g., the model in Cursor or Windsurf) to perform the task. This means:
+
+*   ✅ **No API keys** are needed.
+*   ✅ **No internet connection** is required to use the AI features.
+*   ✅ **100% Private:** All your data and AI interactions stay on your local machine.
+*   ✅ It automatically uses whatever powerful model your client is configured with.
+
+## Key Features (Version 1.0 - MVP)
+
+*   **🧠 Smart Storage (`store_memory`)**
+    *   Remembers notes, decisions, or any piece of information.
+    *   **Automatically detects** the project you're working on.
+    *   Uses the client's AI to **automatically generate relevant tags and keywords** for powerful searching later.
+
+*   **🔍 Smart Search (`search_memory`)**
+    *   Searches your entire memory database.
+    *   Uses the client's AI to perform **query expansion**. Searching for "auth" might also find memories about "JWT," "login," or "OAuth."
+
+*   **📂 Project Listing (`list_projects`)**
+    *   Provides a quick overview of all the projects you have stored memories for.
+
+*   **✨ Proactive Context Loading (`memory://current-project`)**
+    *   This is an MCP **Resource** that automatically loads the last 10 memories for your current project into the AI's context the moment you open it.
+    *   Your AI assistant has immediate context without you ever having to ask!
+
+## Getting Started
+
+### Prerequisites
+*   [Node.js](https://nodejs.org/) (version 18.0.0 or higher)
+*   [Git](https://git-scm.com/)
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/HassanAliMAli/Projecta.git
+```
+
+### 2. Install Dependencies
+Navigate into the project directory and install the required packages.
+```bash
+cd projecta
+npm install
+```
+
+### 3. Configure Your Database Path
+Open the `config.json` file. This file contains a single setting: `sqlitePath`.
+
+Replace the placeholder with an **absolute path** on your machine where you want the `memories.db` database file to be stored.
+
+**Example for Windows:**
+```json
+{
+  "sqlitePath": "C:/Users/YourUser/Documents/projecta/memories.db"
+}
+```
+
+**Example for macOS/Linux:**
+```json
+{
+  "sqlitePath": "/Users/youruser/Documents/projecta/memories.db"
+}
+```
+
+### 4. Run the Server
+From the `projecta` directory, run the following command in your terminal:
+```bash
+node src/index.js
+```
+You should see a confirmation message: `Memory MCP MVP Server running...`
+
+### 5. Connect Your AI Assistant
+Configure your AI development environment (e.g., Cursor, Windsurf) to use Projecta. This usually involves creating a configuration file in your workspace that points to the server.
+
+For example, in your coding project, create a file at `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": [
+        "C:/Users/YourUser/path/to/projecta/src/index.js" // <-- IMPORTANT: Use the absolute path to index.js
+      ]
     }
-    ```
+  }
+}
+```
+Restart your AI client, and it will now have access to Projecta's tools.
 
-## Usage
+## Usage Examples
 
-- **Store a memory:** "Remember that we decided to use PostgreSQL for the database."
-- **Search:** "What did we decide for the database?"
-- **List:** "What projects do I have memories for?"
+*   **Storing a memory:**
+    > "Remember: We chose PostgreSQL over MongoDB because we need ACID compliance for transactions."
+
+*   **Searching for a memory:**
+    > "What did we decide for the database?"
+
+*   **Listing your projects:**
+    > "What projects do I have memories for?"
+
+*   **Using automatic context:**
+    Simply open a project you've worked on before. Then ask a question.
+    > "What was I working on here last?"
+    *(The AI will use the context from the `memory://current-project` resource to answer.)*
+
+---
+
+## 🚀 Future Roadmap
+
+Projecta is built on a solid foundation that can be extended with even more powerful features. Here are some of the planned enhancements:
+
+*   **🧠 Knowledge Graph & Memory Linking**
+    *   The AI will be able to find and create relationships between memories. A "bug fix" memory could be automatically linked to the "technical decision" memory that caused the bug, creating a traceable history of your project.
+
+*   **🗓️ Automated Session Journals**
+    *   An end-of-day `save_session` tool that detects which files you've changed and asks the AI to write a summary of your work. The next morning, `restore_session` will get you back up to speed in seconds.
+
+*   **🔗 Deeper IDE & Git Integration**
+    *   **File-Specific Memories:** Link memories directly to a file or function, so context becomes available automatically when you open that file.
+    *   **Git-Awareness:** Store memories against specific Git branches or automatically create summaries from your commit messages.
+
+*   **💻 Specialized Memory Types**
+    *   **Code Snippet Library:** A dedicated tool to save, explain, and retrieve useful code patterns.
+    *   **Personal Error Database:** Remember an error message and its solution, creating a personal, searchable troubleshooting guide.
+
+## Our Philosophy
+
+*   **Local-First & Private:** Your data never leaves your machine.
+*   **Zero-Dependency:** No reliance on external APIs, services, or keys.
+*   **Intelligent & Proactive:** Uses your own AI to automate tasks and provide context before you ask.
+*   **Effortless:** Designed for a "zero mental overhead" experience.
+
+## Contributing
+
+This is an open-source project, and feedback and contributions are welcome. Please feel free to open an issue or submit a pull request on GitHub.
