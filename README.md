@@ -52,65 +52,57 @@ When a "smart" action is needed (like generating tags or understanding a search 
 
 
 
-Projecta is designed to be installed once and used everywhere, with no manual setup per project.
+Projecta is published on NPM and is designed for a zero-setup experience.
 
 
 
-### Step 1: Install Projecta Globally
+### One-Time Global Setup
 
 
 
-Open your terminal and run the following command. This will install the `projecta` command on your system, making it available everywhere.
+1.  **Open Your IDE's Global Settings**
+
+    In VS Code or Cursor, press `Ctrl+Shift+P` and search for "Open User Settings (JSON)".
 
 
 
-```bash
+2.  **Add the MCP Server Configuration**
 
-npm install -g . 
-
-```
-
-*(Note: This installs from the local directory. Once published to NPM, this command would be `npm install -g projecta`)*
+    Add the following JSON snippet. This tells your IDE to automatically download and run Projecta whenever it's needed.
 
 
 
-### Step 2: Configure Your IDE (One Time Only)
+    ```json
+
+    "copilot.mcp.servers": {
+
+      "memory": {
+
+        "command": "npx",
+
+        "args": [
+
+          "-y",
+
+          "@realhassan/projecta"
+
+        ]
+
+      }
+
+    }
+
+    ```
 
 
 
-Open your IDE's global settings file (e.g., in VS Code or Cursor, press `Ctrl+Shift+P` and find "Open User Settings (JSON)").
+3.  **Restart Your IDE**
+
+    Save the settings file and restart your IDE.
 
 
 
-Add the following entry. This tells your IDE to use Projecta for any project you open.
-
-
-
-```json
-
-"copilot.mcp.servers": {
-
-  "memory": {
-
-    "command": "projecta"
-
-  }
-
-}
-
-```
-
-
-
-### Step 3: Restart Your IDE
-
-
-
-Save the settings file and restart your IDE. 
-
-
-
-**That's it!** Projecta is now installed and will run automatically. You can start using it in any of your coding projects.
+**That's it!** Projecta is now installed and will run automatically in any project you open.
 
 ## Usage Examples
 
