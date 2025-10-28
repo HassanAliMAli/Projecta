@@ -85,30 +85,43 @@ Replace the placeholder with an **absolute path** on your machine where you want
 }
 ```
 
-### 4. Run the Server
-From the `projecta` directory, run the following command in your terminal:
-```bash
-node src/index.js
-```
-You should see a confirmation message: `Memory MCP MVP Server running...`
+### 4. Connect Your AI Assistant
 
-### 5. Connect Your AI Assistant
-Configure your AI development environment (e.g., Cursor, Windsurf) to use Projecta. This usually involves creating a configuration file in your workspace that points to the server.
 
-For example, in your coding project, create a file at `.cursor/mcp.json`:
+
+This is the final and most important step. You do **not** need to run the server manually from a terminal. The IDE will do it for you.
+
+
+
+In your coding project (the one you want Projecta to remember things about), create a configuration file for your AI assistant. For example, in Cursor, you would create a file at `.cursor/mcp.json` with the following content:
+
 ```json
+
 {
+
   "mcpServers": {
+
     "memory": {
+
       "command": "node",
+
       "args": [
-        "C:/Users/YourUser/path/to/projecta/src/index.js" // <-- IMPORTANT: Use the absolute path to index.js
+
+        "C:/Users/YourUser/path/to/projecta/src/index.js" // <-- IMPORTANT: Use the absolute path to Projecta's index.js
+
       ]
+
     }
+
   }
+
 }
+
 ```
-Restart your AI client, and it will now have access to Projecta's tools.
+
+
+
+Once this file is in place, your IDE will automatically start and manage the Projecta server in the background whenever you open this project.
 
 ## Usage Examples
 
