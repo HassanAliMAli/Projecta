@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "A local AI memory server to provide persistent, project-based context.",
   "type": "module",
-  "main": "dist/projecta.js",
+  "main": "dist/projecta.cjs",
   "bin": {
-    "projecta": "dist/projecta.js"
+    "projecta": "dist/projecta.cjs"
   },
   "scripts": {
-    "start": "node dist/projecta.js",
-    "build": "esbuild src/index.js --bundle --platform=node --outfile=dist/projecta.js --external:better-sqlite3"
+    "start": "node dist/projecta.cjs",
+    "build": "esbuild src/index.js --bundle --platform=node --outfile=dist/projecta.cjs --external:better-sqlite3"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
