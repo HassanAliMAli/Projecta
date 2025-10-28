@@ -50,68 +50,49 @@ When a "smart" action is needed (like generating tags or understanding a search 
 
 ## Getting Started
 
-### Prerequisites
-*   [Node.js](https://nodejs.org/) (version 18.0.0 or higher)
-*   [Git](https://git-scm.com/)
 
-### 1. Clone the Repository
+
+Projecta is designed to be installed once and used everywhere, with no manual setup per project.
+
+
+
+### Step 1: Install Projecta Globally
+
+
+
+Open your terminal and run the following command. This will install the `projecta` command on your system, making it available everywhere.
+
+
+
 ```bash
-git clone https://github.com/HassanAliMAli/Projecta.git
+
+npm install -g . 
+
 ```
 
-### 2. Install Dependencies
-Navigate into the project directory and install the required packages.
-```bash
-cd projecta
-npm install
-```
-
-### 3. Configure Your Database Path
-Open the `config.json` file. This file contains a single setting: `sqlitePath`.
-
-Replace the placeholder with an **absolute path** on your machine where you want the `memories.db` database file to be stored.
-
-**Example for Windows:**
-```json
-{
-  "sqlitePath": "C:/Users/YourUser/Documents/projecta/memories.db"
-}
-```
-
-**Example for macOS/Linux:**
-```json
-{
-  "sqlitePath": "/Users/youruser/Documents/projecta/memories.db"
-}
-```
-
-### 4. Connect Your AI Assistant
+*(Note: This installs from the local directory. Once published to NPM, this command would be `npm install -g projecta`)*
 
 
 
-This is the final and most important step. You do **not** need to run the server manually from a terminal. The IDE will do it for you.
+### Step 2: Configure Your IDE (One Time Only)
 
 
 
-In your coding project (the one you want Projecta to remember things about), create a configuration file for your AI assistant. For example, in Cursor, you would create a file at `.cursor/mcp.json` with the following content:
+Open your IDE's global settings file (e.g., in VS Code or Cursor, press `Ctrl+Shift+P` and find "Open User Settings (JSON)").
+
+
+
+Add the following entry. This tells your IDE to use Projecta for any project you open.
+
+
 
 ```json
 
-{
+"copilot.mcp.servers": {
 
-  "mcpServers": {
+  "memory": {
 
-    "memory": {
-
-      "command": "node",
-
-      "args": [
-
-        "C:/Users/YourUser/path/to/projecta/src/index.js" // <-- IMPORTANT: Use the absolute path to Projecta's index.js
-
-      ]
-
-    }
+    "command": "projecta"
 
   }
 
@@ -121,7 +102,15 @@ In your coding project (the one you want Projecta to remember things about), cre
 
 
 
-Once this file is in place, your IDE will automatically start and manage the Projecta server in the background whenever you open this project.
+### Step 3: Restart Your IDE
+
+
+
+Save the settings file and restart your IDE. 
+
+
+
+**That's it!** Projecta is now installed and will run automatically. You can start using it in any of your coding projects.
 
 ## Usage Examples
 

@@ -1,11 +1,15 @@
-
 {
   "name": "projecta",
+  "version": "1.0.0",
   "description": "A local AI memory server to provide persistent, project-based context.",
   "type": "module",
-  "main": "src/index.js",
+  "main": "dist/projecta.js",
+  "bin": {
+    "projecta": "dist/projecta.js"
+  },
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node dist/projecta.js",
+    "build": "esbuild src/index.js --bundle --platform=node --outfile=dist/projecta.js --external:better-sqlite3"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
@@ -14,5 +18,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11"
   }
 }
